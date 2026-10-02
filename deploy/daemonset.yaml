@@ -18,9 +18,8 @@ spec:
       hostNetwork: true
       containers:
         - name: k8s-dscp-marker
-          # Replace with a pinned release tag before deploying, e.g.
-          # ghcr.io/julien-noblet/k8s-dscp-marker:v0.1.0
-          image: ghcr.io/julien-noblet/k8s-dscp-marker:latest
+          # Pin to a released tag; see https://github.com/julien-noblet/k8s-dscp-marker/releases
+          image: ghcr.io/julien-noblet/k8s-dscp-marker:v0.1.0
           securityContext:
             capabilities:
               add: ["NET_ADMIN"]
