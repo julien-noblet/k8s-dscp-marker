@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: k8s-dscp-marker
+  namespace: kube-system
+  labels:
+    app: k8s-dscp-marker
+spec:
+  selector:
+    matchLabels:
+      app: k8s-dscp-marker
+  template:
+    metadata:
+      labels:
+        app: k8s-dscp-marker
+    spec:
+      serviceAccountName: k8s-dscp-marker
+      hostNetwork: true
+      containers:
+        - name: k8s-dscp-marker
+          # Replace with a pinned release tag before deploying, e.g.
+          # ghcr.io/julien-noblet/k8s-dscp-marker:v0.1.0
+          image: ghcr.io/julien-noblet/k8s-dscp-marker:latest
+          securityContext:
+            capabilities:
+              add: ["NET_ADMIN"]
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            # Uncomment to override the defaults:
+            # - name: ANNOTATION_KEY
+            #   value: "dscp-marker.io/class"
+            # - name: CHAIN_NAME
+            #   value: "DSCP_MARKER"
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 64Mi
+      tolerations:
+        - operator: Exists

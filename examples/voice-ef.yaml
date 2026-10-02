@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: voice-example
+  annotations:
+    dscp-marker.io/class: "EF"
+spec:
+  containers:
+    - name: app
+      image: example/voice-app:latest

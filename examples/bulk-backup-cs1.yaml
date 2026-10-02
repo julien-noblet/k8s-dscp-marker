@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: bulk-backup-example
+spec:
+  schedule: "0 3 * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            dscp-marker.io/class: "CS1"
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: app
+              image: example/backup-tool:latest

@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database-example
+  template:
+    metadata:
+      labels:
+        app: database-example
+      annotations:
+        dscp-marker.io/class: "AF31"
+    spec:
+      containers:
+        - name: app
+          image: example/database:latest
